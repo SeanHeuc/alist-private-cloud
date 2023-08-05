@@ -1,19 +1,22 @@
 package model
 
-import "time"
+import (
+	"github.com/alist-org/alist/v3/internal/conf"
+	"time"
+)
 
 type Storage struct {
-	ID              uint      `json:"id" gorm:"primaryKey"`                        // unique key
-	MountPath       string    `json:"mount_path" gorm:"unique" binding:"required"` // must be standardized
-	Order           int       `json:"order"`                                       // use to sort
-	Driver          string    `json:"driver"`                                      // driver used
-	CacheExpiration int       `json:"cache_expiration"`                            // cache expire time
-	Status          string    `json:"status"`
-	Addition        string    `json:"addition" gorm:"type:text"` // Additional information, defined in the corresponding driver
-	Remark          string    `json:"remark"`
-	Modified        time.Time `json:"modified"`
-	Disabled        bool      `json:"disabled"` // if disabled
-	EnableSign      bool      `json:"enable_sign"`
+	ID              uint           `json:"id" gorm:"primaryKey"`                        // unique key
+	MountPath       string         `json:"mount_path" gorm:"unique" binding:"required"` // must be standardized
+	Order           int            `json:"order"`                                       // use to sort
+	Driver          string         `json:"driver"`                                      // driver used
+	CacheExpiration int            `json:"cache_expiration"`                            // cache expire time
+	Status          string         `json:"status"`
+	Addition        conf.ObfusText `json:"addition" gorm:"type:ObfusText"` // Additional information, defined in the corresponding driver
+	Remark          string         `json:"remark"`
+	Modified        time.Time      `json:"modified"`
+	Disabled        bool           `json:"disabled"` // if disabled
+	EnableSign      bool           `json:"enable_sign"`
 	Sort
 	Proxy
 }

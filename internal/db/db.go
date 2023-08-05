@@ -23,11 +23,11 @@ func AutoMigrate(dst ...interface{}) error {
 	if conf.Conf.Database.Type == "mysql" {
 		err = db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4").AutoMigrate(dst...)
 	} else {
-		err = db.AutoMigrate(dst...)
+		err = db.Debug().AutoMigrate(dst...)
 	}
 	return err
 }
 
 func GetDb() *gorm.DB {
-	return db;
+	return db
 }

@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"github.com/alist-org/alist/v3/internal/conf"
 
 	"github.com/alist-org/alist/v3/cmd/flags"
 	"github.com/alist-org/alist/v3/internal/db"
@@ -17,7 +18,7 @@ func initDevData() {
 		Order:     0,
 		Driver:    "Local",
 		Status:    "",
-		Addition:  `{"root_folder_path":"."}`,
+		Addition:  *conf.NewObfusText(`{"root_folder_path":"."}`),
 	})
 	if err != nil {
 		log.Fatalf("failed to create storage: %+v", err)

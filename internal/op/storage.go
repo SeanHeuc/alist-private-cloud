@@ -2,6 +2,7 @@ package op
 
 import (
 	"context"
+	"github.com/alist-org/alist/v3/internal/conf"
 	"sort"
 	"strings"
 	"time"
@@ -89,7 +90,7 @@ func initStorage(ctx context.Context, storage model.Storage, storageDriver drive
 	driverStorage := storageDriver.GetStorage()
 
 	// Unmarshal Addition
-	err = utils.Json.UnmarshalFromString(driverStorage.Addition, storageDriver.GetAddition())
+	err = utils.Json.UnmarshalFromString(driverStorage.Addition.String(), storageDriver.GetAddition())
 	if err == nil {
 		err = storageDriver.Init(ctx)
 	}
@@ -231,7 +232,7 @@ func saveDriverStorage(driver driver.Driver) error {
 	if err != nil {
 		return errors.Wrap(err, "error while marshal addition")
 	}
-	storage.Addition = str
+	storage.Addition = *conf.NewObfusText(str)
 	err = db.UpdateStorage(storage)
 	if err != nil {
 		return errors.WithMessage(err, "failed update storage in database")
