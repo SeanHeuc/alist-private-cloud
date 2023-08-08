@@ -45,12 +45,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: build/compress/*
-
-      - name: Release latest
-        uses: irongut/EditRelease@v1.2.0
-        with:
-          token: ${{ secrets.MY_TOKEN }}
-          id: ${{ github.event.release.id }}
           prerelease: false
 
   release_desktop:
