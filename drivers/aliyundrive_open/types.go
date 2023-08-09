@@ -30,9 +30,15 @@ type File struct {
 	Url           string    `json:"url"`
 	CreatedAt     time.Time `json:"created_at"`
 	UpdatedAt     time.Time `json:"updated_at"`
+
+	// create only
+	FileName string `json:"file_name"`
 }
 
 func fileToObj(f File) *model.ObjThumb {
+	if f.Name == "" {
+		f.Name = f.FileName
+	}
 	return &model.ObjThumb{
 		Object: model.Object{
 			ID:       f.FileId,
@@ -69,4 +75,10 @@ type CreateResp struct {
 	//Location     string `json:"location"`
 	RapidUpload  bool       `json:"rapid_upload"`
 	PartInfoList []PartInfo `json:"part_info_list"`
+}
+
+type MoveOrCopyResp struct {
+	Exist   bool   `json:"exist"`
+	DriveID string `json:"drive_id"`
+	FileID  string `json:"file_id"`
 }
