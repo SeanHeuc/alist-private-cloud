@@ -2,6 +2,7 @@ package baiduphoto
 
 import (
 	"fmt"
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"time"
 
 	"github.com/alist-org/alist/v3/internal/model"
@@ -77,8 +78,8 @@ func (c *File) CreateTime() time.Time {
 	return time.Unix(c.Ctime, 0)
 }
 
-func (c *File) GetHash() (string, string) {
-	return "", ""
+func (c *File) GetHash() utils.HashInfo {
+	return utils.HashInfo{}
 }
 
 /*相册部分*/
@@ -120,8 +121,8 @@ func (a *Album) CreateTime() time.Time {
 	return time.Unix(a.CreationTime, 0)
 }
 
-func (a *Album) GetHash() (string, string) {
-	return "", ""
+func (a *Album) GetHash() utils.HashInfo {
+	return utils.HashInfo{}
 }
 
 func (a *Album) GetSize() int64  { return 0 }

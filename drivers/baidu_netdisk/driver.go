@@ -9,10 +9,8 @@ import (
 	"io"
 	"math"
 	"net/url"
-	"os"
 	stdpath "path"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/alist-org/alist/v3/drivers/base"
@@ -149,13 +147,12 @@ func (d *BaiduNetdisk) Remove(ctx context.Context, obj model.Obj) error {
 }
 
 func (d *BaiduNetdisk) Put(ctx context.Context, dstDir model.Obj, stream model.FileStreamer, up driver.UpdateProgress) (model.Obj, error) {
-	tempFile, err := utils.CreateTempFile(stream.GetReadCloser(), stream.GetSize())
+	tempFile, err := stream.CacheFullInTempFile()
 	if err != nil {
 		return nil, err
 	}
 	defer func() {
 		_ = tempFile.Close()
-		_ = os.Remove(tempFile.Name())
 	}()
 
 	streamSize := stream.GetSize()

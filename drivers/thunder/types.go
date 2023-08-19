@@ -3,6 +3,7 @@ package thunder
 import (
 	"fmt"
 	"github.com/alist-org/alist/v3/internal/model"
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"strconv"
 	"time"
 )
@@ -153,8 +154,8 @@ func (c *Files) CreateTime() time.Time {
 	return c.CreatedTime
 }
 
-func (c *Files) GetHash() (string, string) {
-	return "", ""
+func (c *Files) GetHash() utils.HashInfo {
+	return utils.HashInfo{}
 }
 
 func (c *Files) GetSize() int64     { size, _ := strconv.ParseInt(c.Size, 10, 64); return size }

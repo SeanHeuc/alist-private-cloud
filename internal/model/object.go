@@ -30,8 +30,7 @@ type Object struct {
 	Modified time.Time
 	Ctime    time.Time // file create time
 	IsFolder bool
-	Hash     string
-	HashType string
+	HashInfo utils.HashInfo
 }
 
 func (o *Object) GetName() string {
@@ -68,13 +67,8 @@ func (o *Object) SetPath(path string) {
 	o.Path = path
 }
 
-func (o *Object) SetHash(hash string, hashType string) {
-	o.Hash = hash
-	o.HashType = hashType
-}
-
-func (o *Object) GetHash() (string, string) {
-	return o.Hash, o.HashType
+func (o *Object) GetHash() utils.HashInfo {
+	return o.HashInfo
 }
 
 type Thumbnail struct {

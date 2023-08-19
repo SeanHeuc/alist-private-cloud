@@ -1,6 +1,7 @@
 package aliyundrive_open
 
 import (
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"time"
 
 	"github.com/alist-org/alist/v3/internal/model"
@@ -47,8 +48,7 @@ func fileToObj(f File) *model.ObjThumb {
 			Modified: f.UpdatedAt,
 			IsFolder: f.Type == "folder",
 			Ctime:    f.CreatedAt,
-			Hash:     f.ContentHash,
-			HashType: model.SHA1,
+			HashInfo: utils.NewHashInfo(utils.SHA1, f.ContentHash),
 		},
 		Thumbnail: model.Thumbnail{Thumbnail: f.Thumbnail},
 	}

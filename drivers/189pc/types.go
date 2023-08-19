@@ -3,7 +3,7 @@ package _189pc
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/alist-org/alist/v3/internal/model"
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"sort"
 	"strings"
 	"time"
@@ -180,8 +180,8 @@ func (c *Cloud189File) CreateTime() time.Time {
 	return time.Time(c.CreateDate)
 }
 
-func (c *Cloud189File) GetHash() (string, string) {
-	return c.Md5, model.MD5
+func (c *Cloud189File) GetHash() utils.HashInfo {
+	return utils.NewHashInfo(utils.MD5, c.Md5)
 }
 
 func (c *Cloud189File) GetSize() int64     { return c.Size }
@@ -212,8 +212,8 @@ func (c *Cloud189Folder) CreateTime() time.Time {
 	return time.Time(c.CreateDate)
 }
 
-func (c *Cloud189Folder) GetHash() (string, string) {
-	return "", ""
+func (c *Cloud189Folder) GetHash() utils.HashInfo {
+	return utils.HashInfo{}
 }
 
 func (c *Cloud189Folder) GetSize() int64     { return 0 }

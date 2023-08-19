@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/alist-org/alist/v3/internal/model"
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"time"
 )
 
@@ -57,8 +58,8 @@ func (f *FileOrFolder) CreateTime() time.Time {
 	return f.ModTime()
 }
 
-func (f *FileOrFolder) GetHash() (string, string) {
-	return "", ""
+func (f *FileOrFolder) GetHash() utils.HashInfo {
+	return utils.HashInfo{}
 }
 
 func (f *FileOrFolder) GetID() string {
@@ -146,8 +147,8 @@ func (f *FileOrFolderByShareUrl) CreateTime() time.Time {
 	return f.ModTime()
 }
 
-func (f *FileOrFolderByShareUrl) GetHash() (string, string) {
-	return "", ""
+func (f *FileOrFolderByShareUrl) GetHash() utils.HashInfo {
+	return utils.HashInfo{}
 }
 
 func (f *FileOrFolderByShareUrl) GetID() string   { return f.ID }

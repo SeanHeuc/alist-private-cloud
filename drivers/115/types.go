@@ -3,6 +3,7 @@ package _115
 import (
 	"github.com/SheltonZhu/115driver/pkg/driver"
 	"github.com/alist-org/alist/v3/internal/model"
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"time"
 )
 
@@ -16,6 +17,6 @@ func (f FileObj) CreateTime() time.Time {
 	return f.CreateTime()
 }
 
-func (f *FileObj) GetHash() (string, string) {
-	return f.Sha1, model.SHA1
+func (f *FileObj) GetHash() utils.HashInfo {
+	return utils.NewHashInfo(utils.SHA1, f.Sha1)
 }

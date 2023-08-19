@@ -1,6 +1,7 @@
 package _123
 
 import (
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"net/url"
 	"path"
 	"strconv"
@@ -25,8 +26,8 @@ func (f File) CreateTime() time.Time {
 	return f.UpdateAt
 }
 
-func (f File) GetHash() (string, string) {
-	return "", ""
+func (f File) GetHash() utils.HashInfo {
+	return utils.HashInfo{}
 }
 
 func (f File) GetPath() string {

@@ -1,6 +1,7 @@
 package mega
 
 import (
+	"github.com/alist-org/alist/v3/pkg/utils"
 	"time"
 
 	"github.com/alist-org/alist/v3/internal/model"
@@ -23,9 +24,9 @@ func (m *MegaNode) CreateTime() time.Time {
 	return m.n.GetTimeStamp()
 }
 
-func (m *MegaNode) GetHash() (string, string) {
+func (m *MegaNode) GetHash() utils.HashInfo {
 	//Meganz use md5, but can't get the original file hash, due to it's encrypted in the cloud
-	return "", ""
+	return utils.HashInfo{}
 }
 
 func (m *MegaNode) ModTime() time.Time {

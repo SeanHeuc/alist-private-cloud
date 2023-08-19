@@ -113,7 +113,7 @@ func CreateNestedFile(path string) (*os.File, error) {
 }
 
 // CreateTempFile create temp file from io.ReadCloser, and seek to 0
-func CreateTempFile(r io.ReadCloser, size int64) (*os.File, error) {
+func CreateTempFile(r io.Reader, size int64) (*os.File, error) {
 	if f, ok := r.(*os.File); ok {
 		return f, nil
 	}
@@ -136,35 +136,6 @@ func CreateTempFile(r io.ReadCloser, size int64) (*os.File, error) {
 		return nil, errs.NewErr(err, "CreateTempFile failed, can't seek to 0 ")
 	}
 	return f, nil
-}
-
-// TODO: further improve : don't create local tempfile for local/smb
-type BufferedReadSeekCloser struct {
-	io.ReadSeekCloser
-}
-
-func NewBufferedReadSeekCloser(r io.ReadCloser, size int64) (*BufferedReadSeekCloser, error) {
-	result := BufferedReadSeekCloser{}
-	rsc, ok := r.(io.ReadSeekCloser)
-	if ok {
-		result.ReadSeekCloser = rsc
-
-	} else {
-		tempFile, err := CreateTempFile(r, size)
-		if err != nil {
-			return nil, err
-		}
-		result.ReadSeekCloser = tempFile
-	}
-
-	return &result, nil
-}
-func (b *BufferedReadSeekCloser) Close() error {
-	tFile, ok := b.ReadSeekCloser.(*os.File)
-	if ok {
-		return os.Remove(tFile.Name())
-	}
-	return nil
 }
 
 // GetFileType get file type
