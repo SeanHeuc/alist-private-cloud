@@ -3,35 +3,14 @@ package common
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
-	"net/url"
-	"sync"
-
-	"github.com/alist-org/alist/v3/drivers/base"
 	"github.com/alist-org/alist/v3/internal/model"
 	"github.com/alist-org/alist/v3/internal/net"
 	"github.com/alist-org/alist/v3/pkg/http_range"
 	"github.com/alist-org/alist/v3/pkg/utils"
-	"github.com/pkg/errors"
+	"io"
+	"net/http"
+	"net/url"
 )
-
-func HttpClient() *http.Client {
-	once.Do(func() {
-		httpClient = base.NewHttpClient()
-		httpClient.CheckRedirect = func(req *http.Request, via []*http.Request) error {
-			if len(via) >= 10 {
-				return errors.New("stopped after 10 redirects")
-			}
-			req.Header.Del("Referer")
-			return nil
-		}
-	})
-	return httpClient
-}
-
-var once sync.Once
-var httpClient *http.Client
 
 func Proxy(w http.ResponseWriter, r *http.Request, link *model.Link, file model.Obj) error {
 	if link.MFile != nil {
@@ -64,8 +43,8 @@ func Proxy(w http.ResponseWriter, r *http.Request, link *model.Link, file model.
 				HeaderRef: header,
 			}
 			rc, err := down.Download(ctx, req)
-			finalClosers.Add(*rc)
-			return *rc, err
+			finalClosers.Add(rc)
+			return rc, err
 		}
 		net.ServeHTTP(w, r, file.GetName(), file.ModTime(), file.GetSize(), rangeReader)
 		defer finalClosers.Close()
