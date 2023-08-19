@@ -109,21 +109,16 @@ func ParseRange(s string, size int64) ([]Range, error) { // nolint:gocognit
 
 func (r Range) MimeHeader(contentType string, size int64) textproto.MIMEHeader {
 	return textproto.MIMEHeader{
-		"Content-Range": {r.contentRange(size)},
+		"Content-Range": {r.ContentRange(size)},
 		"Content-Type":  {contentType},
 	}
 }
 
-// for http response header
-func (r Range) contentRange(size int64) string {
-	return fmt.Sprintf("bytes %d-%d/%d", r.Start, r.Start+r.Length-1, size)
-}
-
 // ApplyRangeToHttpHeader for http request header
-func ApplyRangeToHttpHeader(p Range, headerRef *http.Header) *http.Header {
+func ApplyRangeToHttpHeader(p Range, headerRef http.Header) http.Header {
 	header := headerRef
 	if header == nil {
-		header = &http.Header{}
+		header = http.Header{}
 	}
 	if p.Start == 0 && p.Length < 0 {
 		header.Del("Range")
