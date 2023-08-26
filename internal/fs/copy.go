@@ -15,7 +15,6 @@ import (
 	"github.com/alist-org/alist/v3/pkg/utils"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
-
 )
 
 var CopyTaskManager = task.NewTaskManager(3, func(tid *uint64) {
