@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/alist-org/alist/v3/internal/conf"
 	"github.com/alist-org/alist/v3/internal/driver"
@@ -103,14 +104,6 @@ func (d *Local) FileInfoToObj(f fs.FileInfo, reqPath string, fullPath string) mo
 	if !isFolder {
 		size = f.Size()
 	}
-	ctime := f.ModTime()
-	t, err := times.Stat(stdpath.Join(fullPath, f.Name()))
-	if err == nil {
-		if t.HasBirthTime() {
-			ctime = t.BirthTime()
-		}
-	}
-
 	var ctime time.Time
 	t, err := times.Stat(stdpath.Join(fullPath, f.Name()))
 	if err == nil {
