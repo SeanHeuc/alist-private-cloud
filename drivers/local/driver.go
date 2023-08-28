@@ -21,6 +21,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Local struct {
@@ -101,7 +102,7 @@ func (d *Local) FileInfoToObj(f fs.FileInfo, reqPath string, fullPath string) mo
 	if !isFolder {
 		size = f.Size()
 	}
-	ctime := f.ModTime()
+	var ctime time.Time
 	t, err := times.Stat(stdpath.Join(fullPath, f.Name()))
 	if err == nil {
 		if t.HasBirthTime() {
@@ -153,10 +154,18 @@ func (d *Local) Get(ctx context.Context, path string) (model.Obj, error) {
 	if isFolder {
 		size = 0
 	}
+	var ctime time.Time
+	t, err := times.Stat(path)
+	if err == nil {
+		if t.HasBirthTime() {
+			ctime = t.BirthTime()
+		}
+	}
 	file := model.Object{
 		Path:     path,
 		Name:     f.Name(),
 		Modified: f.ModTime(),
+		Ctime:    ctime,
 		Size:     size,
 		IsFolder: isFolder,
 	}
