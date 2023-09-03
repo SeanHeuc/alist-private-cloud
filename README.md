@@ -27,9 +27,9 @@ So this project should have below extra features:
   - Task resume from last failed point
   - Task auto retry on failure
   - Task size validates on finish
-- [ ] rapid-upload support move between local/smb and cloud storage with SHA1 hash return. 
+- [x] rapid-upload support move between local/smb and cloud storage with SHA1 hash return. 
 
-Other features please refer to [Alist](https://github.com/alist-org/alist)
+Above features are merged to offical repo. Full features please refer to [Alist](https://github.com/alist-org/alist)
 
 ## Client Development Plan
 
